@@ -181,12 +181,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_browse.php
     $col->addTextField('name')->setClass('fullWidth')->setValue($name);
 
     $col = $row->addColumn()->setClass('quarterWidth');
-    //$col->addLabel('producer', __('Author/Producer'));
-    //$col->addTextField('producer')->setClass('fullWidth')->setValue($producer);
     $col->addLabel('readerAge', __('Readers Age'));
     $ageArray=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
     $col->addSelect('readerAge')->fromArray($ageArray)->selected($readerAge)->placeholder();
 
+    $col = $row->addColumn()->setClass('quarterWidth');
+    $col->addLabel('producer', __('Author/Producer'));
+    $col->addTextField('producer')->setClass('fullWidth')->setValue($producer);
+    
     $col = $row->addColumn()->setClass('quarterWidth');
     $col->addLabel('type', __('Type'));
     $col->addSelect('type')
@@ -195,14 +197,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_browse.php
         ->selected($type)
         ->placeholder();
 
-    $col = $row->addColumn()->setClass('quarterWidth');
+/*     $col = $row->addColumn()->setClass('quarterWidth');
     $col->addLabel('collection', __('Collection'));
     $col->addSelect('collection')
         ->fromArray($collections)
         ->chainedTo('type', $collectionsChained)
         ->setClass('fullWidth')
         ->selected($collection)
-        ->placeholder();
+        ->placeholder(); */
 
     $col = $form->addRow()->addColumn();
     $col->addLabel('everything', __('All Fields'));
