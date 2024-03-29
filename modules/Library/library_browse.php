@@ -144,6 +144,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_browse.php
     $type = trim($_REQUEST['type'] ?? '');
     $collection = trim($_REQUEST['collection'] ?? '');
     $everything = trim($_REQUEST['everything'] ?? '');
+    $readerAge = trim($_REQUEST['readerAge'] ?? 0);
 
     $gibbonLibraryItemID = trim($_GET['gibbonLibraryItemID'] ?? '');
 
@@ -180,8 +181,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_browse.php
     $col->addTextField('name')->setClass('fullWidth')->setValue($name);
 
     $col = $row->addColumn()->setClass('quarterWidth');
-    $col->addLabel('producer', __('Author/Producer'));
-    $col->addTextField('producer')->setClass('fullWidth')->setValue($producer);
+    //$col->addLabel('producer', __('Author/Producer'));
+    //$col->addTextField('producer')->setClass('fullWidth')->setValue($producer);
+    $col->addLabel('readerAge', __('Readers Age'));
+    $ageArray=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+    $col->addSelect('readerAge')->fromArray($ageArray)->selected($readerAge)->placeholder();
 
     $col = $row->addColumn()->setClass('quarterWidth');
     $col->addLabel('type', __('Type'));
@@ -216,6 +220,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Library/library_browse.php
     $gateway = $container->get(LibraryGateway::class);
     $criteria = $gateway->newQueryCriteria(true)
         ->sortBy('id')
+        ->filterBy('agecheck',$readerAge)
         ->filterBy('name', $name)
         ->filterBy('producer', $producer)
         ->filterBy('type', $type)
